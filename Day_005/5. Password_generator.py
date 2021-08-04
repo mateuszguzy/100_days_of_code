@@ -52,7 +52,7 @@ for position in password_index_list:
     choosen_character = random.choice(all_characters)
     password += str(choosen_character)
 
-    # remove choosen character from pool to not be choosen again
+    # remove choosen character from pool to not be choosen
 
     all_characters.remove(choosen_character)
 
