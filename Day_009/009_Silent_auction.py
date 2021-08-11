@@ -4,7 +4,7 @@ from art import logo
 bids = dict()
 
 def clear():
-
+    """Clears console"""
     os.system("clear")
 
 def choose_winner():
