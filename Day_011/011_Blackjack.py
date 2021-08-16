@@ -1,7 +1,7 @@
 from art import logo
 import random
 
-cards = {"1":1, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":10}
+cards = {"2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10, "A":11}
 # list needed to user random function on figures
 cards_figures = list()
 # global variables to use them in different functions
@@ -11,11 +11,22 @@ points = dict()
 # need to define starting value because it later cannot add to non-existing value
 points["user"] = 0
 points["computer"] = 0
+# value used to determine when to run automatic draws for computer
 player_still_drawing = True
 
 # prepare list of figures to randomly choose from. Cannot from .keys() directly.
 for figure in cards.keys():
     cards_figures.append(figure)
+
+def count_cards(*args):
+    """Function counts points in deck. Distinguish if Ace is treated like 1 point or 11 points."""
+    global points
+    # if card is ace and after adding to poll it's over 21 it's treated like 1
+    if args[1] == "A" and (points[args[0]] + cards[args[1]]) > 21:
+        points[args[0]] += 1
+    # in other cases points are counted normal from dictionary
+    else:
+        points[args[0]] += cards[args[1]]
 
 def starting_draw():
     """Function used only in first draw. Draws two cards for every player."""
@@ -24,10 +35,10 @@ def starting_draw():
     user_deck = (random.choices(cards_figures, k = 2))
     computer_deck = (random.choices(cards_figures, k = 2))
     for card in user_deck:
-        points["user"] += cards[card]
+        count_cards("user", card)
 
     for card in computer_deck:
-        points["computer"] += cards[card]
+        count_cards("computer", card)
 
 def show_results():
     global points, player_still_drawing, user_deck, computer_deck
@@ -73,10 +84,14 @@ def check_points():
         if user_points < computer_points:
             print("\nComputer wins.")
             quit()
-        elif user_points >= computer_points:
+        # computer must draw card when points are below 17
+        elif user_points >= computer_points and computer_points < 17:
             computer_draw()
+        elif user_points > computer_points:
+            print("\n!!! You win !!!")
+            quit()
         elif user_points == computer_points:
-            print("It's a draw")
+            print("\nIt's a draw")
             quit()
 
 def question():
@@ -99,8 +114,8 @@ def draw_card(*args):
     new_card = random.choice(cards_figures)
     # card is added to deck of player provided as argument
     args[1].append(new_card)
-    # card points are added to points dictionary
-    points[args[0]] += cards[new_card]
+    # card points are counted and added to points dictionary depending on given player
+    count_cards(args[0], new_card)
 
 def main():
     """Blackjack main function."""
