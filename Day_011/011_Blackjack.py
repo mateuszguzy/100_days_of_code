@@ -17,22 +17,17 @@ player_still_drawing = True
 for figure in cards.keys():
     cards_figures.append(figure)
 
-def counting_points(user, computer):
-    """Function for counting points of player and computer."""
-    global points
-    # function adds value taken from a cards dictionary to a points dictionary
-    for card in user:
-        points["user"] += cards[card]
-
-    for card in computer:
-        points["computer"] += cards[card]
-
 def starting_draw():
     """Function used only in first draw. Draws two cards for every player."""
-    global computer_deck, user_deck
+    global computer_deck, user_deck, points
     # "random.choices" return a list, so not append but it just equals to result of this function
     user_deck = (random.choices(cards_figures, k = 2))
     computer_deck = (random.choices(cards_figures, k = 2))
+    for card in user_deck:
+        points["user"] += cards[card]
+
+    for card in computer_deck:
+        points["computer"] += cards[card]
 
 def show_results():
     global points, player_still_drawing, user_deck, computer_deck
@@ -113,9 +108,6 @@ def main():
     print(logo)
     # function overwrites global "user_deck" and "computer_deck"
     starting_draw()
-    # function overwrites global "points" dictionary taking data from "user_deck" and "computer_deck"
-    counting_points(user_deck, computer_deck)
-    check_points()
     # show current points
     show_results()
     # while user is still playing, system needs to check if player want to draw another card
