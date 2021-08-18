@@ -1,5 +1,3 @@
-
-
 MENU = {
     "espresso": {
         "ingredients": {
