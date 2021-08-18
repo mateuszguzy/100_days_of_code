@@ -1,6 +1,8 @@
+import os
+import random
+
 from art import logo, vs
 from game_data import game_data
-import random, os
 
 # assign game_data to another variable so it can be mutated
 data = game_data
@@ -12,8 +14,10 @@ points = 0
 # flag to end while loop
 the_end = False
 
+
 def clear_console():
     os.system("clear")
+
 
 def check_answer():
     """Function checks if user answer is correct, and either gives points or quits game."""
@@ -27,10 +31,12 @@ def check_answer():
     else:
         the_end = True
 
-def reassing_data():
+
+def reassign_data():
     """Make previous compare A as compare B, to choose new random B."""
     global compare_a, compare_b
     compare_a = compare_b
+
 
 def choose_data():
     """Select random data from game data and removes it from list."""
@@ -41,6 +47,7 @@ def choose_data():
         data.remove(compare_a)
     compare_b = random.choice(data)
     data.remove(compare_b)
+
 
 def main():
     global the_end, points, compare_a, compare_b
@@ -55,9 +62,10 @@ def main():
         print(vs)
         print("B: %s, a %s, from %s" % (compare_b["name"], compare_b["description"], compare_b["country"]))
         check_answer()
-        reassing_data()
+        reassign_data()
     print(f"You lose with a score: {points}")
     quit()
+
 
 if __name__ == "__main__":
     main()
