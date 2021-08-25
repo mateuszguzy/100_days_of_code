@@ -17,6 +17,7 @@ class Palette(Turtle):
         self.field_height = 0
         self.top_boundary = 0
         self.bottom_boundary = 0
+        self.palette_x_cor = 0
 
     def create(self, side, field_width, field_height):
         self.field_height = field_height
@@ -27,10 +28,11 @@ class Palette(Turtle):
         for piece in range(int(self.palette_length / 20)):
             piece = Palette()
             if side == "left":
-                piece.goto(x=-((field_width / 2) - 30), y=((self.palette_length / 2) - y_cord_step))
-
+                self.palette_x_cor = -((self.field_width / 2) - 30)
+                piece.goto(x=self.palette_x_cor, y=((self.palette_length / 2) - y_cord_step))
             elif side == "right":
-                piece.goto(x=((field_width / 2) - 30), y=((self.palette_length / 2) - y_cord_step))
+                self.palette_x_cor = ((self.field_width / 2) - 30)
+                piece.goto(x=self.palette_x_cor, y=((self.palette_length / 2) - y_cord_step))
 
             y_cord_step += 20
             self.palette_body.append(piece)
@@ -41,7 +43,7 @@ class Palette(Turtle):
             if self.palette_body[0].ycor() >= self.top_boundary - 10:
                 pass
             else:
-                self.palette_body[piece].forward(20)
+                self.palette_body[piece].forward(10)
             self.screen.update()
 
     def down(self):
@@ -49,7 +51,7 @@ class Palette(Turtle):
             if self.palette_body[-1].ycor() <= self.bottom_boundary + 20:
                 pass
             else:
-                self.palette_body[piece].backward(20)
+                self.palette_body[piece].backward(10)
         self.screen.update()
 
 
