@@ -21,14 +21,14 @@ class Field:
         self.top_boundary = ((self.field_height / 2) - 50)
         self.bottom_boundary = -((self.field_height / 2) - 50)
         self.field.setup(width=width, height=height)
-        print(self.field_width)
 
     def set_bounds(self):
-        # upper and lower bound
+        """Function used to draw upper and lower bound."""
         self.bounds.penup()
-        # self.bounds.goto(x=-(self.field_width/2), y=((self.field_height/2)-30))
+        # top boundary
         self.bounds.goto(x=-(self.field_width/2), y=self.top_boundary)
         self.write(self.field_width)
+        # bottom boundary
         self.bounds.goto(x=-(self.field_width/2), y=self.bottom_boundary)
         self.write(self.field_width)
         # middle line
@@ -40,6 +40,7 @@ class Field:
             self.bounds.forward(distance)
 
     def write(self, distance):
+        """Helping function."""
         self.bounds.pendown()
         self.bounds.forward(distance)
         self.bounds.penup()
