@@ -30,7 +30,7 @@ class Scoreboard(Turtle):
     def increase_score(self):
         self.score += 1
 
-    def game_over(self):
+    def reset(self):
         self.write(arg="GAME OVER!", align=ALIGNMENT, font=(FONT, GAME_OVER_FONT_SIZE, FONT_TYPE))
 
     def goal(self):
