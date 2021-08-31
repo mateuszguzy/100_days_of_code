@@ -39,6 +39,12 @@ class Snake:
         time.sleep(self.speed)
         self.snake_body[0].forward(20)
 
+    def reset(self):
+        for piece in self.snake_body:
+            piece.goto(x=650, y=650)
+        self.snake_body.clear()
+        self.starting_body()
+
     def grow(self):
         piece = Turtle("square")
         piece.color("white")
