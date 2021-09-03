@@ -13,8 +13,6 @@ game_is_on = True
 correct_guesses = list()
 screen.title('U.S. Quiz Game')
 states_list = pandas.read_csv('50_states.csv')
-# dictionary prepared to create CSV with all missed states
-states_to_learn = {'State': list()}
 
 
 def main():
@@ -24,6 +22,12 @@ def main():
                                   prompt="What's the next state name: ").title()
         # if typed exit, quit the game and list all missed states
         if answer == "Exit":
+            # when stopped guessing prepare a list of all missed states
+            # it must be present in original table
+            states_to_learn = [state for state in states_list.state if state not in correct_guesses]
+            # # create a new table out of missed states
+            new_table = pandas.DataFrame(states_to_learn)
+            print(new_table)
             break
         # this variable contains either an Object or nothing, in case when it's nothing length is equal to 0
         answer_check = states_list.state[states_list.state == answer]
@@ -43,15 +47,7 @@ def main():
         # when guess is not good, run program again
         else:
             main()
-    # when stopped guessing prepare a list of all missed states
-    # it must be present in original table
-    for state in states_list.state:
-        # and not present in list of correct guesses
-        if state not in correct_guesses:
-            states_to_learn['State'].append(state)
-    # create a new table out of missed states
-    new_table = pandas.DataFrame(states_to_learn)
-    print(new_table)
+
 
 
 def print_state(answer, x_cord, y_cord):
