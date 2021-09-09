@@ -1,0 +1,2 @@
+site_1 | name@email.com | pass_1
+site_2 | name@email.com | pass_2
