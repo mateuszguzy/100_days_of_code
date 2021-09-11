@@ -1,0 +1,18 @@
+{
+    "site_1": {
+        "Username": "name@email.com",
+        "Password": "pass_1"
+    },
+    "site_2": {
+        "Username": "name@email.com",
+        "Password": "pass_2"
+    },
+    "site_3": {
+        "Username": "name@email.com",
+        "Password": "pass_3"
+    },
+    "site_5": {
+        "Username": "name@email.com",
+        "Password": "pass_5"
+    }
+}
