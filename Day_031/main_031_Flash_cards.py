@@ -2,42 +2,6 @@ from tkinter import *
 import pandas
 import random
 
-# keep current card as global to use it in different functions
-current_card = None
-
-def main():
-    global current_card
-    # create new card from Card class and initialize it's attributes
-    current_card = Card()
-    # start new card function to select random word from file
-    current_card.new_card()
-    # UI setup
-    card_canvas.itemconfig(card_image, image=card_front)
-    card_canvas.itemconfig(card_title, text='Danish', fill='black')
-    card_canvas.itemconfig(word, text=current_card.danish_word.strip(), fill='black')
-    # update window to show danish word before waiting 3s and showing translation
-    window.update()
-    window.after(3000)
-    # reverse card UI and current card attributes
-    card_canvas.itemconfig(card_image, image=card_back)
-    card_canvas.itemconfig(card_title, text='English | Polish', fill='white')
-    card_canvas.itemconfig(word, text=f"{current_card.english_translation.strip()} | "
-                                      f"{current_card.polish_translation.strip()}", fill='white')
-
-def decision(keyword):
-    """Allows user to choose if given word is known, and will be erased from database,
-    or it's not known and will repeat."""
-    # using global variable of current card (word)
-    global current_card
-    # if user clicks green button the word is known and will be removed
-    if keyword == 'remove':
-        # trigger removing function (shows error beacuse at the moment current card has no Object assigned)
-        current_card.remove_word()
-        # after deleting word, repeat program
-        main()
-    else:
-        # if word is not known and user press red button, repeat program
-        main()
 
 # ---------------------------- CARD CLASS ------------------------------- #
 class Card:
@@ -73,6 +37,46 @@ class Card:
         to_save = words[words['Danish'] != self.danish_word]
         # pass variable (DataFrame) to CSV file, overwriting current values
         to_save.to_csv('data/words_to_learn.csv', mode='w')
+
+# keep current card as global to use it in different functions
+# define current class type to not trigger code errors while current card is not yet defined, or by mistake will be
+# defined wrong
+current_card: Card
+
+
+def main():
+    global current_card
+    # create new card from Card class and initialize it's attributes
+    current_card = Card()
+    # start new card function to select random word from file
+    current_card.new_card()
+    # UI setup
+    card_canvas.itemconfig(card_image, image=card_front)
+    card_canvas.itemconfig(card_title, text='Danish', fill='black')
+    card_canvas.itemconfig(word, text=current_card.danish_word.strip(), fill='black')
+    # update window to show danish word before waiting 3s and showing translation
+    window.update()
+    window.after(3000)
+    # reverse card UI and current card attributes
+    card_canvas.itemconfig(card_image, image=card_back)
+    card_canvas.itemconfig(card_title, text='English | Polish', fill='white')
+    card_canvas.itemconfig(word, text=f"{current_card.english_translation.strip()} | "
+                                      f"{current_card.polish_translation.strip()}", fill='white')
+
+def decision(keyword):
+    """Allows user to choose if given word is known, and will be erased from database,
+    or it's not known and will repeat."""
+    # using global variable of current card (word)
+    global current_card
+    # if user clicks green button the word is known and will be removed
+    if keyword == 'remove':
+        # trigger removing function
+        current_card.remove_word()
+        # after deleting word, repeat program
+        main()
+    else:
+        # if word is not known and user press red button, repeat program
+        main()
 
 # ---------------------------- UI SETUP ------------------------------- #
 # Constants
