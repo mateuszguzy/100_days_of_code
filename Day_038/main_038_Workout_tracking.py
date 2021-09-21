@@ -1,5 +1,12 @@
+import os
+
 import requests
 import datetime as dt
+
+NUTRITRIONIX_ID = os.environ.get("NUTRITRIONIX_ID")
+NUTRITRIONIX_API_KEY = os.environ.get("NUTRITRIONIX_API_KEY")
+SHEETY_WORKOUT_TRACKER_ENDPOINT = os.environ.get("SHEETY_WORKOUT_TRACKER_ENDPOINT")
+SHEETY_WORKOUT_TRACKER_AUTH_TOKEN = os.environ.get("SHEETY_WORKOUT_TRACKER_AUTH_TOKEN")
 
 
 def get_exercise_data():
@@ -36,11 +43,11 @@ def get_exercise_data():
 
 def add_row_to_sheet(exercise, duration, calories):
     today = dt.datetime.now()
-    sheet_endpoint = ''
+    sheet_endpoint = SHEETY_WORKOUT_TRACKER_ENDPOINT + 'arkusz1'
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "",
+        "Authorization": SHEETY_WORKOUT_TRACKER_AUTH_TOKEN,
     }
     # data structure requested by the API, keys must match spreadsheet column names
     json_data = {
