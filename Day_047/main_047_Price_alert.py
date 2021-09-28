@@ -5,7 +5,7 @@ import smtplib
 
 PRODUCT_URL = "https://www.amazon.com/some_product"
 PRICE_TO_COMPARE = float()
-# lowest price set with use of www.camelcamelcamel.com site, which keeps track of price history data
+# lowest price set with use of "www.camelcamelcamel.com" site, which keeps track of price history data
 LOWEST_PRICE = 26.00
 FROM_MAIL = os.environ.get("TEST_MAIL_100_DAYS")
 TO_MAIL = os.environ.get("PRIVATE_MAIL_1")
