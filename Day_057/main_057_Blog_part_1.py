@@ -16,7 +16,7 @@ def get_post(num):
     blog_data = response.json()
     # on home page there are redirects to exact post
     # number of post to show is determined by "num" variable and inside JSON in "id" attribute
-    # check all posts on the blog and if one's id match "num" variable pass it into HTML template
+    # check all posts on the blog and if one's id match "num" variable pass it into HTML templates
     for entry in blog_data:
         if entry["id"] == num:
             post_data = entry
