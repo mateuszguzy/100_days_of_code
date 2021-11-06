@@ -36,7 +36,6 @@ def post(number):
             return render_template('post.html', data=single_post)
 
 def send_email(data):
-    print(data)
     name = data['Name']
     email = data["Email"]
     phone = data["Phone"]
