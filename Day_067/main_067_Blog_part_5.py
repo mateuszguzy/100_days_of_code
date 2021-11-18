@@ -15,6 +15,7 @@ Bootstrap(app)
 ##CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# set how rich edit toolbar for post should be
 app.config['CKEDITOR_PKG_TYPE'] = 'standard'
 db = SQLAlchemy(app)
 
