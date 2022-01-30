@@ -36,6 +36,17 @@
   </div>
 </nav>
        {% block content %}
+            {% block flash %}
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class="alert alert-info">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                {% endwith %}
+            {% endblock %}
        {% endblock %}
 </body>
 
