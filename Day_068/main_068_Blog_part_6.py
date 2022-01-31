@@ -1,9 +1,9 @@
 import flask_login
-from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory, abort
+from flask import Flask, render_template, request, url_for, redirect, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
-from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -27,15 +27,10 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
 
-    def is_active(self):
-        return True
-
-    def get_id(self):
-        return self.id
-
 
 # Line below only required once, when creating DB.
-# db.create_all()
+db.create_all()
+
 
 # CREATE USER
 class CreateUser(FlaskForm):
@@ -93,15 +88,14 @@ def login():
     if request.method == "POST":
         # search for user in DB
         user = User.query.filter_by(email=request.form["email"]).first()
-        # if user's password is correct, redirect to "secrets" page
-        if check_password_hash(user.password, request.form["password"]):
+        # if user exists and user's password is correct, redirect to "secrets" page
+        if user and check_password_hash(user.password, request.form["password"]):
             username = user.name
             login_user(user)
             flash("Logged in successfully.")
             return redirect(f"/secrets/{username}")
         else:
             flash("Invalid login or password.")
-            # return render_template("login.html")
     return render_template("login.html")
 
 
